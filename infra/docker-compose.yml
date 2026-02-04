@@ -1,0 +1,16 @@
+services:
+  db:
+    image: postgres:16
+    container_name: qbear_db
+    restart: always
+    environment:
+      POSTGRES_USER: qbear
+      POSTGRES_PASSWORD: qbearpw
+      POSTGRES_DB: qbear
+    ports:
+      - "5432:5432"
+    volumes:
+      - qbear_db_data:/var/lib/postgresql/data
+
+volumes:
+  qbear_db_data:
