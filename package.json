@@ -1,0 +1,17 @@
+{
+  "name": "qbear",
+  "private": true,
+  "workspaces": ["backend", "bot"],
+  "scripts": {
+    "db:up": "docker compose -f infra/docker-compose.yml up -d",
+    "db:down": "docker compose -f infra/docker-compose.yml down",
+
+    "dev:backend": "npm -w backend run start:dev",
+    "dev:bot": "npm -w bot run dev",
+
+    "build:backend": "npm -w backend run build",
+    "build:bot": "npm -w bot run build",
+
+    "dev": "npm run dev:backend & npm run dev:bot"
+  }
+}
