@@ -6,10 +6,22 @@ export class TelegramService {
   constructor(private prisma: PrismaService) {}
 
   async start(tgId: string) {
-    const user = await this.prisma.user.upsert({
+    const existing = await this.prisma.user.findUnique({
       where: { tgId },
-      update: {},
-      create: {
+      include: { bear: true },
+    })
+
+    if (existing?.bear) {
+      return {
+        isNew: false,
+        message: `🐻 Welcome back!`,
+        user: { tgId: existing.tgId, id: existing.id },
+        bear: existing.bear,
+      }
+    }
+
+    const user = await this.prisma.user.create({
+      data: {
         tgId,
         bear: {
           create: {
@@ -24,7 +36,9 @@ export class TelegramService {
     })
 
     return {
+      isNew: true,
       message: `🐻 Welcome! Your bear is born!`,
+      user: { tgId: user.tgId, id: user.id },
       bear: user.bear,
     }
   }
