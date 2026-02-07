@@ -23,14 +23,16 @@ model User {
 }
 
 model Bear {
-  id        String   @id @default(cuid())
-  userId    String   @unique
-  level     Int      @default(1)
-  exp       Int      @default(0)
-  stamina   Int      @default(10)
-  mood      String   @default("CALM")
-  createdAt DateTime @default(now())
+  id            String   @id @default(cuid())
+  userId        String   @unique
+  level         Int      @default(1)
+  exp           Int      @default(0)
+  stamina       Int      @default(10)
+  mood          String   @default("CALM")
+  createdAt     DateTime @default(now())
+  lastActiveAt  DateTime @default(now())
 
-  user      User     @relation(fields: [userId], references: [id], onDelete: Cascade)
+  user          User     @relation(fields: [userId], references: [id], onDelete: Cascade)
 }
+
 

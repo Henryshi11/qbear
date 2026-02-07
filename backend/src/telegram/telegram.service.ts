@@ -42,4 +42,32 @@ export class TelegramService {
       bear: user.bear,
     }
   }
+  async stats(tgId: string) {
+  const user = await this.prisma.user.findUnique({
+    where: { tgId },
+    include: { bear: true },
+  })
+
+  if (!user || !user.bear) {
+    return { ok: false, message: '❗你还没有熊，先输入 /start' }
+  }
+
+  const now = new Date()
+  const diffMs = now.getTime() - user.bear.lastActiveAt.getTime()
+  const minutes = Math.floor(diffMs / 60000)
+
+  let bear = user.bear
+  if (minutes > 0) {
+    bear = await this.prisma.bear.update({
+      where: { id: user.bear.id },
+      data: {
+        exp: { increment: minutes },
+        lastActiveAt: now,
+      },
+    })
+  }
+
+  return { ok: true, bear }
+}
+
 }

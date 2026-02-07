@@ -1,5 +1,5 @@
 import { Context } from 'telegraf'
-import { backend } from '../backendClient'
+import { backend } from '../backendClient.js'
 
 export async function handleStart(ctx: Context) {
   const from = ctx.from
