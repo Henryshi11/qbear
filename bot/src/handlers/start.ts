@@ -1,3 +1,5 @@
+// bot/src/handlers/start.ts
+
 import { Context } from 'telegraf'
 import { backend } from '../backendClient.js'
 
@@ -15,9 +17,11 @@ export async function handleStart(ctx: Context) {
     `${title}\n\n` +
     `等级: ${bear.level}\n` +
     `经验: ${bear.exp}\n` +
-    `体力: ${bear.stamina}\n` +
-    `心情: ${bear.mood}\n\n` +
-    `输入 /stats（下一步我们做）查看完整信息。`
+    `金币: ${bear.coins}\n` +
+    `体力: ${bear.stamina}/${bear.staminaMax}\n` +
+    `饱食度: ${bear.hunger}/${bear.hungerMax}\n` +
+    `心情: ${bear.mood}/${bear.moodMax}\n\n` +
+    `输入 /stats 查看完整信息。`
 
   await ctx.reply(text)
 }
